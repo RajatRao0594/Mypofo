@@ -20,6 +20,13 @@ app.get('/',controller.index)
 app.get('/contact',controller.contact)
 app.get('/blogs',controller.blog)
 app.get('/resume',controller.resume)
+app.get('/projects',controller.project)
+
+app.get('/login',controller.login)
+app.post('/login',controller.doLogin)
+
+app.get('/signup',controller.signup)
+app.post('/signup',controller.doSignup)
 
 app.use(logger.notFoundError)
 app.use(logger.handleError)
