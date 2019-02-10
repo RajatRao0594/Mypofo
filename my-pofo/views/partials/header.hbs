@@ -33,19 +33,20 @@
 
 <nav class="site-header sticky-top py-1">
   <div class="container d-flex flex-column flex-md-row justify-content-between">
-    <a class="py-2" href="http://13.232.38.70">
+    <a class="py-2" href="/">
        <img width="40" height="40"  src="/image/logo.png" alt="">
     </a>
     <button class="navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-    <a class="py-2 {{#if navIndex}} active {{/if}} d-none d-md-inline-block" href="/">About</a>
+    <a class="py-2 {{#if navIndex}} active {{/if}} d-none d-md-inline-block" href="/about">About</a>
     <a class="py-2 {{#if navContact}} active {{/if}} d-none d-md-inline-block" href="/contact">Contact</a>
     <a class="py-2 {{#if navSignup}} active {{/if}} d-none d-md-inline-block" href="/signup">SignUp</a>
-    <a class="py-2 {{#if navLogin}} active {{/if}} d-none d-md-inline-block" href="/login">Login</a>
+    {{!-- <a class="py-2 {{#if navLogin}} active {{/if}} d-none d-md-inline-block" href="/login">Login</a> --}}
     <a class="py-2 {{#if navblog}} active {{/if}} d-none d-md-inline-block" href="/blogs">Blogs</a>
-    <a class="py-2 {{#if navResume}} active {{/if}} d-none d-md-inline-block" href="/resume">Resume</a>
+    <a class="py-2 {{#if navResume}} active {{/if}} d-none d-md-inline-block" href="/resume" target="blank">Resume</a>
     <a class="py-2 {{#if navProject}} active {{/if}} d-none d-md-inline-block" href="/projects">Projects</a>
+     <a class="py-2 {{#if navAdmin}} active {{/if}} d-none d-md-inline-block" href="/admin">Admin</a>
   </div>
   
   <div class="collapse navbar-collapse" id="navbarSupportedContent">

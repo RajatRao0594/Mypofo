@@ -41,14 +41,31 @@ module.exports.login=(req,res)=>{
         title:'Login',
         layout:'layout-signin',
         extraCss:'<link rel="stylesheet" href="css/signin.css">',
-        navLogin:true
+        navLogin:true,
     })
+  
 }
 
 module.exports.doLogin =(req,res)=>{
-       let body = req.body;
-       console.log(body)
-       res.redirect('/')
+
+       req.checkBody('email','Please enter email').notEmpty().isEmail().withMessage('Invalid Email');
+       req.checkBody('password','Password field cannot be Empty').notEmpty().withMessage('Password is required')
+       .isLength({
+           min:6,
+           max:undefined
+       }).withMessage('Password is too short')
+       var errors = req.validationErrors();
+       if(errors) {
+           let msgs = errors.map(ele => ele.msg);
+           res.render('login',{
+            title:'Login',
+            layout:'layout-signin',
+            extraCss:'<link rel="stylesheet" href="css/signin.css">',
+            messages:msgs
+        });
+       }else{
+           res.redirect('/')
+       }       
 }
 
 module.exports.signup = (req,res)=>{
@@ -64,4 +81,18 @@ module.exports.doSignup = (req,res)=>{
     let body = req.body;
     console.log(body)
     res.redirect('/login')
+}
+
+module.exports.dashboard = (req,res)=>{
+    res.render('admin/dashboard',{
+        title:'Dashboard template',
+        layout:'layout-admin'
+    })
+}
+
+module.exports.adminProjectList = (req,res) =>{
+    res.render('admin/project-list',{
+        title:'project list',
+        layout:'layout-admin'
+    })
 }

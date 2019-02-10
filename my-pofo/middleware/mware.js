@@ -19,5 +19,4 @@ module.exports.handleError=function(err,req,res,next){
         title:'Something went wrong',
         layout:'layout'
     })
-
 }

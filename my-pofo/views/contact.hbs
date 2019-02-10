@@ -47,18 +47,25 @@
                         <li class="breadcrumb-item"><a href="/contact">Contact</a></li>
                      </ol>
                  </nav>
-                  <form action="/contact" method="POST">
-                    <div><h3>Contact Me</h3>    </div> 
-                     <hr>
-                     <br>
-                    <div class="form-label-group"> <label for="fullname">Full Name</label>
-                        <input type="text" placeholder="name"></div> 
-                    <div class="form-label-group"><label for="Email"> Email</label>
-                       <input type="text" placeholder="email"></div>
-                    <div class="form-label-group"><label for="Mobile">Mobile</label>
-                        <input type="number" placeholder="Mobile Number"></div>
-                 <div class="form-label-group"> <textarea name="Description" id="" cols="30" rows="10" placeholder="Description"></textarea></div>
-                  </form>
+                        <form>
+                        <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter your Full Name">
+                        </div>
+                        <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                    <div class="form-group">
+                        <label for="mobile number">Mobile</label>
+                        <input type="number" class="form-control" id="" placeholder="Mobile Number">
+                    </div>
+                    <div class="form-label-group">
+                    <br>
+                        <textarea name="description" id="description" rows="5" class="form-control" placeholder="Description"></textarea>
+                        </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
              </div>
         </div>
      </div>
