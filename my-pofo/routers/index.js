@@ -1,57 +1,64 @@
-module.exports.index = (req,res)=>{
+let data = require('../my-data.json');
+let express = require('express');
+let router = express.Router();
+
+router.get('/',(req,res,next)=>{
     res.render('index',{
         layout:'layout',
         title:'Album Page',
         navIndex:true
     })
-}
+});
 
-module.exports.contact =(req,res) => {
+ router.get('/contact',(req,res,next) =>{
     res.render('contact',{
         layout:'layout',
         title:'contact us',
         navContact:true
     })
-}
+});
 
-module.exports.blog =(req,res) =>{
-    res.render('blog',{
-        layout:'layout',
-        title:'blog',
-        navblog:true
-
-    })
-}
-
-module.exports.resume = (req,res) =>{
-    res.redirect('/resume.pdf')
+router.get('/resume', (req,res,next) =>{
+    res.redirect('/resume.pdf'),
     navResume=true
-}
+});
 
-module.exports.project=(req,res)=>{
-    res.render('project-detail',{
+router.get('/project',(req,res,next)=>{
+    res.render('projects',{
         title:'Project',
         layout:'layout',
         navProject:true
     })
-}
+});
 
-module.exports.login=(req,res)=>{
+router.get('/login',(req,res,next)=>{
     res.render('login',{
         title:'Login',
         layout:'layout-signin',
         extraCss:'<link rel="stylesheet" href="css/signin.css">',
         navLogin:true,
     })
-  
-}
+});
 
-module.exports.doLogin =(req,res)=>{
+const user =[
+    {
+        name:'Rajat',
+        email:"test@test.com",
+        password:"test"
+    },
+    {
+        name:'Rao',
+        email:'js@js.com',
+        password:'javascript'
+    }
+]
+
+router.post('/login',(req,res,next)=>{
 
        req.checkBody('email','Please enter email').notEmpty().isEmail().withMessage('Invalid Email');
        req.checkBody('password','Password field cannot be Empty').notEmpty().withMessage('Password is required')
        .isLength({
-           min:6,
+           min:3,
            max:undefined
        }).withMessage('Password is too short')
        var errors = req.validationErrors();
@@ -64,35 +71,48 @@ module.exports.doLogin =(req,res)=>{
             messages:msgs
         });
        }else{
-           res.redirect('/')
-       }       
-}
+           let data = req.body;
 
-module.exports.signup = (req,res)=>{
+           let foundUser = user.filter(user =>data.email == user.email && data.password == user.password)
+        //    if(data.email == user.email && data.password == user.password )
+            if(foundUser.length>0) {
+            req.session.isLoggedIn = true;
+            req.session.user = foundUser[0];
+           // req.session.user = user;
+            // res.setHeader('Set-Cookie',"isLoggedIn= true;Max-Age=10;HttpOnly")
+             
+            res.redirect('/admin/dashboard')
+           } else {
+         
+            res.render('login',{
+                title:'Login',
+                layout:'layout-signin',
+                extraCss:'<link rel="stylesheet" href="css/signin.css">',
+                messages:['Email or Password Wrong']
+            });
+           }  
+        }       
+})
+
+
+ router.get('/logout',(req,res) =>{
+     req.session.isLoggedIn =false;
+     res.redirect('/');
+ });
+
+router.get('/signup',(req,res,next)=>{
     res.render('signup',{
         title:'signup',
         layout:'layout-signin',
         extraCss:'<link rel="stylesheet" href="css/signin.css">',
         navSignup:true
     })
-}
+});
 
-module.exports.doSignup = (req,res)=>{
+router.post('/signup', (req,res,next)=>{
     let body = req.body;
     console.log(body)
     res.redirect('/login')
-}
+});
 
-module.exports.dashboard = (req,res)=>{
-    res.render('admin/dashboard',{
-        title:'Dashboard template',
-        layout:'layout-admin'
-    })
-}
-
-module.exports.adminProjectList = (req,res) =>{
-    res.render('admin/project-list',{
-        title:'project list',
-        layout:'layout-admin'
-    })
-}
+module.exports = router;
