@@ -18,7 +18,7 @@
 }
 
 .active{
-    color:#black !important;
+    color:#fff !important;
     border-bottom:2px solid #fff
 }
 
@@ -32,4 +32,32 @@
 
 .form-label-group{
     padding-bottom: 15px;
+}
+.svg-inline--fa.fa-w-14 {
+    width: .875em;
+}
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -.125em;
+}
+.social {
+    display: flex;
+    margin-top: 1.5rem;
+    margin:0px;
+    padding:0px;
+}
+
+.social a {
+    align-items: center;
+    display: flex;
+    font-size: 1.5rem;
+    height: 2rem;
+    justify-content: left;
+    opacity: 0.8;
+    transition-property: opacity, transform;
+    width: 2rem;
+    will-change: opacity, transform;
 }

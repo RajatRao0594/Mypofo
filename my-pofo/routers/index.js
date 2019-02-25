@@ -72,7 +72,6 @@ router.post('/login',(req,res,next)=>{
         });
        }else{
            let data = req.body;
-
            let foundUser = user.filter(user =>data.email == user.email && data.password == user.password)
         //    if(data.email == user.email && data.password == user.password )
             if(foundUser.length>0) {

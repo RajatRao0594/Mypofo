@@ -23,7 +23,6 @@ module.exports.handleError=function(err,req,res,next){
 
 module.exports.authenticate = function(req,res,next){
     var loggedIn = req.session.isLoggedIn;
-  console.log(loggedIn)
   if(loggedIn){
       next()
   }else{
@@ -33,7 +32,6 @@ module.exports.authenticate = function(req,res,next){
 
 module.exports.authenticated = function(req,res,next){
     req.session.isLoggedIn = req.session.isLoggedIn ? true:false;
-     console.log('authenticated',req.session)
     if(req.session.isLoggedIn){
         res.locals.user = req.session.user;
         next();
