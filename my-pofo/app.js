@@ -32,6 +32,7 @@ useNewUrlParser:true},function(err,data){
     }
 })
 
+
 app.use(session({                            //will create a session object on server
     secret:'my secret',                       
     resave:false,                            // everytime dont save the value

@@ -1,16 +1,16 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
-        <h1 class="h2">Projects Detail</h1>
+        <h1 class="h2"> ProjectDetail</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
                 <button class="btn btn-sm btn-outline-secondary">Create 
                 </button>
-                <button class="btn btn-sm btn-outline-secondary">Edit</button>
+               <a href= "/admin/project/{{project.alias}}/delete" class="btn btn-sm btn-outline-secondary">Delete</a>
             </div>
         </div>
     </div>
 
-    <form action="" method="POST">
+    <form action="/admin/project/{{project.alias}}/update" method="POST">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -46,11 +46,11 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name">Image</label>
-                    {{#if project.image}}
-                        <img src="{{project.image}}" alt="">
+                    {{#if project.imageUrl}}
+                        <img src="{{project.imageUrl}}" alt="">
                     {{else}}
 
-                    <input type="file" class="form-control" value=""></input>
+                   <a href="/admin/project/{{project.alias}}/image-upload">Upload Image</a>
                     {{/if}}
                 </div>
             </div>
