@@ -3,16 +3,25 @@ let express = require('express');
 let router = express.Router();
 let data = require('../my-data.json')
 
+let projectService = require('../service/projectService')
+
 router.get('/',(req,res,next)=>{
     let projects = data.myProjects;
 
-    res.render('projects',{
-        layout:'layout',
-        title:'project',
-        navProjects: true,
-        projects: projects
-    })
-})
+    function publicProjectList(err,data){
+        if(err){
+            next(err)
+        }else{
+            res.render('projects',{
+                layout:'layout',
+                title:'Project',
+                navProjects: true,
+                projects: data
+            })
+        }
+    }
+    projectService.getProjectList(publicProjectList)
+});
 
 router.get('/:projectAlias',(req,res)=>{
         let alias = req.params.projectAlias;

@@ -3,7 +3,9 @@ let express = require('express');
 let router = express.Router();
 const Project = require('../models/projectSchema')
 const multer = require('multer');
-const path = require('path')
+const path = require('path');
+const mediaService = require('../service/uploadMediaService');
+const projectService = require('../service/projectService')
 
 let storage = multer.diskStorage({
     destination :function(req,file,cb){
@@ -34,9 +36,9 @@ router.get('/dashboard',(req,res) =>{
    })
 });
 
-router.get('/project',(req,res)=>{
+router.get('/project',(req,res,next)=>{
 
-     Project.find({},function(err,projectList){
+    function renderProjectList(err,data){
         if(err){
             next(err)
         }else{
@@ -44,10 +46,12 @@ router.get('/project',(req,res)=>{
                 title:'project list',
                 layout:'layout-admin',
                 navProjects:true,
-                projects:projectList    
+                projects:data    
             })
         }
-    })  
+    }
+
+    projectService.getProjectList(renderProjectList)  
 });
 
 router.get('/project/create', (req,res) => {
@@ -55,7 +59,7 @@ router.get('/project/create', (req,res) => {
         title: "Create New Project",
         layout: "layout-admin"
     })
-})
+});
 
 router.post('/project/create',(req,res,next)=>{
     let data = req.body;
@@ -65,28 +69,28 @@ router.post('/project/create',(req,res,next)=>{
     data.alias = alias;
 
     let newProject = new Project(data);
-    newProject.save(function(err,data){
-        if(err){
-            next(err)
-        }else{
-            console.log(data)
-            res.redirect('/admin/project')
-        }
-    })
-})
+    newProject.save().then(projectSaved =>{
+        res.redirect('/admin/project')
+    }).catch(err =>next(err))       
+});
 
 
 router.get('/project/:alias',(req,res)=>{
     let alias = req.params.alias;
-   console.log(alias)
-    Project.findOne({alias:alias}).then(data =>{
+ 
+   function renderProjectDetail(err,data){
+       if(err){
+           next(err)
+       }else{
         res.render('admin/project-detail',{
             title:'Project Detail',
             layout:'layout-admin',
             project:data
         })
-    }).catch(err => next(err)) 
-})
+       }     
+    }projectService.getSingleProject(alias,renderProjectDetail)
+});
+
 
 router.get('/project/:alias/delete',(req,res)=>{
     let alias = req.params.alias;
@@ -125,6 +129,35 @@ router.post('/project/:alias/image-upload',upload.single('upload'),(req,res,next
         console.log(data)
         res.redirect('/admin/project')
     }).catch(err =>next(err))
+});
+
+
+router.get('/project/:alias/upload-demo',(req,res) =>{
+     let alias = req.params.alias;
+
+     res.render('admin/upload',{
+            title:'Demo upload',
+            layout:'layout-admin',
+            actionUrl:'/admin/project/'+alias+'/upload-demo'
+     })
+});
+
+router.post('/project/:alias/upload-demo',(req,res) =>{
+    let alias = req.params.alias;
+
+    let dir = path.join(__dirname,'../static/project-demos/'+alias)
+    let filename = alias+'.zip'
+
+    function uploaded(err,success){
+        console.log('cb called')
+        if(err){
+            console.log(err)
+        }else{
+            console.log('Uploaded')
+            res.redirect('/admin/project')
+        }
+    }
+    mediaService.uploadMedia(req,res,dir,filename,uploaded)
 })
 
 
