@@ -5,8 +5,8 @@ const Person = require("../models/personSchema");
 
 router.get("/", (req, res, next) => {
   res.render("index", {
-     layout: "layout-index",
-    title: "Home Page",
+    layout: "layout-index",
+    title: "Portfolio - Rajat Rao",
     navIndex: true
   });
 });
@@ -14,7 +14,7 @@ router.get("/", (req, res, next) => {
 router.get('/contact', (req,res) => {
   res.render("contact", {
     layout: "layout",
-    title: "contact us",
+    title: "Contact-Rajat Rao",
     navContact: true
   })
 });
@@ -50,20 +50,22 @@ router.get('/contact', (req,res) => {
 // });
 
 router.get("/resume", (req, res, next) => {
-  res.redirect("/resume.pdf"), (navResume = true);
+  res.redirect("/resume.pdf"),
+         (title='Resume-Rajat Rao'),
+         (navResume = true);
 });
 
-router.get("/project", (req, res, next) => {
-  res.render("projects", {
-    title: "Project",
-    layout: "layout",
-    navProject: true
-  });
-});
+// router.get("/projects", (req, res, next) => {
+//   res.render("projects", {
+//     title: "Project",
+//     layout: "layout",
+//     navProject: true
+//   });
+// });
 
 router.get("/login", (req, res, next) => {
   res.render("login", {
-    title: "Login",
+    title: "Login-Rajat Rao",
     layout: "layout-signin",
     extraCss: '<link rel="stylesheet" href="css/signin.css">',
     navLogin: true
@@ -133,12 +135,12 @@ router.post("/login", (req, res, next) => {
 
 router.get("/logout", (req, res) => {
   req.session.isLoggedIn = false;
-  res.redirect("/");
+  res.redirect("/login");
 });
 
 router.get("/signup", (req, res, next) => {
   res.render("signup", {
-    title: "signup",
+    title: "Signup -Rajat Rao",
     layout: "layout-signin",
     extraCss: '<link rel="stylesheet" href="css/signin.css">',
     navSignup: true

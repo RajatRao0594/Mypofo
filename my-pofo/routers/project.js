@@ -23,16 +23,32 @@ router.get('/',(req,res,next)=>{
     projectService.getProjectList(publicProjectList)
 });
 
-router.get('/:projectAlias',(req,res)=>{
+router.get('/demo/:alias', (req, res) => {
+    let alias = req.params.alias;
+    res.render('demo', {
+        title: 'Project Demo',
+        layout: 'layout-demo',
+        alias : alias
+    })
+});
+
+router.get('/:projectAlias',(req,res,next)=>{
         let alias = req.params.projectAlias;
-        let index = data.projectIndex[alias];
-        let project = data.myProjects[index];
      
-        res.render('/project-detail',{
-            title:'Project-Details',
-            layout:'layout',
-            project: project
-        })
+        function projectDetail(err,data){
+            if(err){
+                next(err)
+            }else{
+                res.render('project-detail',{
+                    title:'Project-Details',
+                    layout:'layout',
+                    project: data
+                })
+            }
+        }
+     
+       projectService.getSingleProject(alias,projectDetail)
+
     })
 
 module.exports = router;

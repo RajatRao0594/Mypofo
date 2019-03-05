@@ -50,7 +50,7 @@ app.use(logger.authenticated)                       //authenticating globally
 app.use(logger.log)
 app.use('/',index);
 app.use('/blogs',blog);
-app.use('/projects',project);
+app.use('/project',project);
 
 app.use('/admin',logger.authenticate,admin);       // authenticating for admin
 
